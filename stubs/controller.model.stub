@@ -1,0 +1,73 @@
+<?php
+
+namespace {{ namespace }};
+
+use {{ rootNamespace }}Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use Validator;
+
+class {{ class }} extends Controller
+{
+    public function index()
+    {
+        $tasks = Task::all();
+        return response()->json([
+            "status" => 0,
+            "message" => "Tast List Successfully",
+            'data' => $tasks,
+        ], 200);
+    }
+
+    public function store(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'title' => 'required',
+            'description' => 'required'
+        ]);
+        if ($validator->fails()) {
+            $errorArray = $validator->errors()->all();
+             $message = implode(",",$errorArray);
+            return response()->json(['status'=>1,'message' => $message,'data' => (object) []] , 422);
+        }
+
+        $task = Task::create($request->all());
+        return response()->json([
+            "status" => 0,
+            'message' => 'Tast Create Successfully',
+            'data' => $task
+        ]);
+    }
+
+    public function show(Task $task)
+    {
+        return $task;
+    }
+
+    public function update(Request $request, Task $task)
+    {
+        $request->validate([
+           'title'       => 'nullable',
+           'description' => 'nullable'
+        ]);
+
+        $task->update($request->all());
+
+        return response()->json([
+            "status" => 0,
+            'message' => 'Great success! Task updated',
+            'data' => $task
+        ]);
+    }
+
+    public function destroy(Task $task)
+    {
+        $task->delete();
+
+        return response()->json([
+            "status" => 0,
+            'message' => 'Successfully deleted task!',
+            'data' => 'Successfully deleted task!',
+            
+        ]);
+    }
+}
