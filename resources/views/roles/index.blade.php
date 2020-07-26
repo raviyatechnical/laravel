@@ -1,28 +1,16 @@
 @extends('layouts.app')
-
-
 @section('content')
-<div class="row">
-    <div class="col-lg-12 margin-tb">
-        <div class="pull-left">
-            <h2>Role Management</h2>
-        </div>
-        <div class="pull-right">
-        @can('role-create')
-            <a class="btn btn-success" href="{{ route('roles.create') }}"> Create New Role</a>
-            @endcan
-        </div>
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+  <h1 class="h2">Role Management</h1>
+  <div class="btn-toolbar mb-2 mb-md-0">
+    <div class="btn-group mr-2">
+      @can('role-create')
+      <a class="btn btn-sm btn-outline-success" href="{{ route('roles.create') }}">Create New Role</a>
+      @endcan
     </div>
+  </div>
 </div>
-
-
-@if ($message = Session::get('success'))
-    <div class="alert alert-success">
-        <p>{{ $message }}</p>
-    </div>
-@endif
-
-
+<x-alert/>
 <table class="table table-bordered">
   <tr>
      <th>No</th>

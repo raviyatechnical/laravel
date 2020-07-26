@@ -12,12 +12,24 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+//Cache Problem
+Route::get('/clear-cache', function() {
+    Artisan::call('cache:clear');
+    Artisan::call('route:clear');
+    Artisan::call('config:clear ');
+    Artisan::call('view:clear ');
+    return "Cache is cleared";
+});
 
 Route::get('/', function () {
-    return view('welcome');
+    //return view('welcome');
+    return redirect()->route('login');
 });
 
 Auth::routes();
+//Auth::routes(['verify' => true]); // email verfity 
+
+
 
 Route::get('/home', 'HomeController@index')->name('home');
 
