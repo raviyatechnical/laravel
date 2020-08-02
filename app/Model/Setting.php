@@ -1,24 +1,25 @@
 <?php
 
-namespace {{ namespace }};
+namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
-//use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
-class {{ class }} extends Model
+class Setting extends Model
 {
-    //use SoftDeletes;
-    //protected $primaryKey = 'id';
+    use SoftDeletes;
+    
+    const CREATED_AT = 'created_at';
+    const UPDATED_AT = 'updated_at';
 
-	//protected $table = 'investigation';
-	//protected $fillable = ['name'];
-   
-    //public  $timestamps = false;
-    
-    // const CREATED_AT = 'created_at';
-    // const UPDATED_AT = 'updated_at';
-    
     protected $dates = ['deleted_at'];
+
+	protected $table = 'settings';
+	protected $fillable = [
+        'key',
+        'value'
+    ];
+    //public  $timestamps = false;
     /*
     public function getImageAttribute($value)
     {

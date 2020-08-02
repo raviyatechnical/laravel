@@ -37,3 +37,15 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('roles','UserManagement\RoleController');
     Route::resource('users','UserManagement\UserController');
 });
+
+Route::group(['middleware' => ['auth']], function() {
+	//General Website Management
+	Route::get('/general-settings', 'OrganizationManagement\SettingController@generalSettings')->name('generalSettings');
+    Route::post('/general-settings', 'OrganizationManagement\SettingController@updateGeneralSettings')->name('updateGeneralSettings');
+	//Env Management
+	Route::get('get-env', 'OrganizationManagement\SettingController@getEnv')->name('getEnv');
+    Route::post('get-env', 'OrganizationManagement\SettingController@saveEnv')->name('saveEnv');
+    //Database Management
+    Route::get('/update-database', 'OrganizationManagement\SettingController@getUpdateDatabase')->name('updatedatabase');
+    Route::post('/update-database', 'OrganizationManagement\SettingController@postUpdateDatabase')->name('updatedatabase.post');
+});
