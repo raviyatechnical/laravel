@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\OrganizationManagement;
 
 use App\Http\Controllers\Controller;
-use App\Model\Setting;
+use App\Models\Setting;
 use File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Config;

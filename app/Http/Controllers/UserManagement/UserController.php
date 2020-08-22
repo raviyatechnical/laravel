@@ -3,12 +3,15 @@
 namespace App\Http\Controllers\UserManagement;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-//custom Spatie\Permission
-use Spatie\Permission\Models\Role;
+
 use App\User;
 use DB;
 use Hash;
+use Illuminate\Http\Request;
+use Spatie\Permission\Models\Role;
+//Notification
+use Notification;
+use App\Notifications\UserNotification;
 
 class UserController extends Controller
 {
@@ -92,5 +95,22 @@ class UserController extends Controller
         User::find($id)->delete();
         return redirect()->route('users.index')
                         ->with('success','User deleted successfully');
+    }
+    public function sendNotification()
+    {
+        $user = User::first();
+  
+        $details = [
+            'greeting' => 'Hi Artisan',
+            'body' => 'This is my first notification from RajTechnologies.com',
+            'thanks' => 'Thank you for using RajTechnologies.com tuto!',
+            'actionText' => 'View My Site',
+            'actionURL' => url('/'),
+            'order_id' => 101
+        ];
+  
+        Notification::send($user, new UserNotification($details));
+   
+        dd('done');
     }
 }

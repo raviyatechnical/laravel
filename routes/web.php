@@ -36,6 +36,24 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::group(['middleware' => ['auth']], function() {
     Route::resource('roles','UserManagement\RoleController');
     Route::resource('users','UserManagement\UserController');
+    Route::get('send', 'UserManagement\UserController@sendNotification');
+    Route::get('DatabaseNotificationsMarkasRead', function () {
+    auth()->user()->unreadNotifications->markAsRead();
+    return redirect()->back();
+    })->name('databasenotifications.markasread');
+    Route::get('/databasenotifications', function () {
+    //queueing-notifications
+    //$when = now()->addSeconds(1);
+    //User::find(1)->notify((new UserNotification)->delay($when));
+    //$SLACK_HOOK = '';
+    //dd($SLACK_HOOK);
+    //$users=User::find(1);
+    //Notification::send($users, new UserNotification);
+    //slack Notification
+    //Notification::route('slack', $SLACK_HOOK)->notify($users,new UserNotification());
+    return view('welcome');
+    });
+
 });
 
 Route::group(['middleware' => ['auth']], function() {
